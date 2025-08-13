@@ -82,7 +82,7 @@ To log in to Docker Hub securely, the pipeline uses encrypted secrets stored in 
 * **Backend**: Python, Flask, Flask-SQLAlchemy, Flask-CORS, Gunicorn
 * **Frontend**: HTML5, CSS3, Vanilla JavaScript, Node.js, Express.js
 * **Containerization**: Docker, Docker Compose
-* **CI/CD**: GitHub Actions
+* **CI/CD**: Docker Image, GitHub Actions
 
 ---
 ## How to Run Locally
