@@ -114,5 +114,6 @@ The recommended way to run this application is with Docker Compose, as it handle
     ├── package.json
     └── Dockerfile
 ├── docker-compose.yml
+├── docker-compose.prod.yml
 └── README.md
 ```
