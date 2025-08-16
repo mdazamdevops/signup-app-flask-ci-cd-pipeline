@@ -46,15 +46,15 @@ DockerHub – Image registry.
 └── README.md
 ```
 
-# Step-by-Step Implementation
+## Step-by-Step Implementation
 
 ```
-1. Clone the Repository
+* 1. Clone the Repository
 Bash
 
 git clone https://github.com/<your-username>/nodejs-demo-app.git
 cd nodejs-demo-app
-2. Create Dockerfile
+* 2. Create Dockerfile
 Dockerfile
 
 # Use Node.js base image
@@ -75,7 +75,7 @@ EXPOSE 3000
 
 # Start the application
 CMD ["node", "app.js"]
-3. Push Docker Image to DockerHub
+* 3. Push Docker Image to DockerHub
 Login to DockerHub:
 ```
 
@@ -90,14 +90,14 @@ docker build -t <your-dockerhub-username>/nodejs-demo-app:latest .
 docker push <your-dockerhub-username>/nodejs-demo-app:latest
 ```
 
-4. Configure GitHub Secrets
+* 4. Configure GitHub Secrets
 Add the following secrets in your GitHub repository -> Settings -> Secrets:
 
 DOCKERHUB_USERNAME – Your DockerHub username
 
 DOCKERHUB_TOKEN – Your DockerHub access token
 
-5. Create GitHub Actions Workflow
+* 5. Create GitHub Actions Workflow
 Create the file: .github/workflows/main.yml
 ```
 
@@ -141,7 +141,7 @@ jobs:
       - name: Push image to DockerHub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-demo-app:latest
 ```
-6. Trigger the Pipeline
+* 6. Trigger the Pipeline
 Commit and push changes to the main branch:
 
 ```
