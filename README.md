@@ -85,9 +85,11 @@ docker login
 Build and push:
 
 ```
-
+```
 docker build -t <your-dockerhub-username>/nodejs-demo-app:latest .
 docker push <your-dockerhub-username>/nodejs-demo-app:latest
+```
+
 4. Configure GitHub Secrets
 Add the following secrets in your GitHub repository -> Settings -> Secrets:
 
