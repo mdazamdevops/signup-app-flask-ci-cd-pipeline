@@ -1,104 +1,32 @@
-# Simple User Signup & Login Application
-
-### Introduction
-
-Welcome to this full-stack user authentication application. This project was built from the ground up to serve as a practical example of a secure, modern web application. It features a Python backend powered by the Flask framework and a dynamic, user-friendly frontend built with standard HTML, CSS, and JavaScript.
-
-**Project created by Mohd Azam Uddin.**
-
+# DevOps Internship Task 1 – Automating Code Deployment with CI/CD (GitHub Actions)
+Elevate Labs: Empowering the Future of DevOps
+This project is a testament to the high-quality, hands-on learning experience provided by Elevate Labs. Their internship program is dedicated to empowering the next generation of DevOps professionals by offering practical, real-world challenges that build foundational skills and a deep understanding of modern software development practices.
 ---
-## What is this App?
-
-This application provides a fundamental user authentication system. Its core purpose is to allow new users to create a secure account and for existing users to sign in. It serves as a solid foundation for any web application that requires user management.
-
-**Key Features:**
-* Secure user registration with password hashing.
-* User login and a personalized welcome dashboard.
-* A clean, responsive user interface.
-
+Project Overview
+The goal of this task is to automate code deployment by setting up a CI/CD pipeline using GitHub Actions and Docker. This process eliminates manual steps and ensures that every code change is tested and deployed consistently and efficiently.
 ---
-## How It Was Built - The Journey
 
-This project started with a simple goal: create a functional signup system. The process evolved as we tackled common development challenges.
+### Objective
+Implement a CI/CD pipeline for a Node.js demo application.
 
-#### 1. The Initial Backend
-The first version of the application was a simple **Flask** server, storing user data in a `users.json` file. This approach quickly led to an **"Internal Server Error"** due to file permission issues and the risk of data corruption.
+Automate build, test, and deployment stages.
 
-#### 2. Upgrading to a Real Database
-To fix the errors and make the application more stable, the backend was upgraded to use a proper **SQLite** database. The `Flask-SQLAlchemy` library was used to manage the database, which solved all the data storage problems.
+Use DockerHub for container image storage.
 
-#### 3. Building the Frontend
-The user interface was built with standard **HTML**, **CSS**, and **vanilla JavaScript**. A simple **Node.js/Express** server is used to serve the `index.html` file and manage the local development environment.
+Deploy pipeline triggered on every push to the main branch.
 
----
-## Containerization with Docker
+### Tools & Technologies
+GitHub – Code hosting and version control.
 
-To ensure the application runs reliably in any environment, it has been fully containerized using Docker.
+GitHub Actions – CI/CD automation.
 
-#### What is Containerization?
-Imagine a standardized shipping container that holds not just your application's code, but also the specific version of Python or Node.js it needs, all the required libraries, and the necessary system settings. This "box" can be run on any machine that has Docker installed, guaranteeing that the app will work the same way for a developer, a tester, or in a production environment. This solves the classic "it works on my machine" problem.
+Node.js – Sample web application framework.
 
-#### Creating the Dockerfiles
-A `Dockerfile` is a blueprint for building a container image. This project uses two separate `Dockerfile`s for the backend and frontend, which detail the steps to package each service.
+Docker – Containerization platform.
 
----
-## Automation with GitHub Actions CI/CD
+DockerHub – Image registry.
 
-This project uses a fully automated CI/CD (Continuous Integration/Continuous Deployment) pipeline built with GitHub Actions.
-
-#### What is CI/CD and Why Use It?
-CI/CD is a modern software development practice that automates the process of building, testing, and deploying code.
-* **Continuous Integration (CI)** automatically tests the code every time a change is pushed. This catches bugs early and ensures that new code doesn't break existing features.
-* **Continuous Deployment (CD)** automatically builds the application and deploys it after it passes all the tests.
-
-We use this to save time, reduce human error, and ensure that only high-quality, tested code makes it to production.
-
-#### How the Pipeline Was Built
-The entire pipeline is defined in a single YAML file located at `.github/workflows/main.yml`. This file contains all the instructions for the automated workflow.
-
-#### The Pipeline's Workflow: Step-by-Step
-When code is pushed to the `main` branch, the following happens automatically:
-1.  **Trigger**: The `push` event automatically starts the pipeline.
-2.  **Test Job**: This job runs first to ensure code quality.
-    * It checks out the latest code.
-    * It sets up separate Python and Node.js environments.
-    * It runs the command `pip install -r requirements.txt` to install backend dependencies.
-    * It runs `flake8 .` to lint the Python code for errors.
-    * It runs `npm ci` to install frontend dependencies.
-    * It runs `npx eslint .` to lint the JavaScript code.
-3.  **Build & Push Job**: This job only runs if the `test` job succeeds.
-    * It securely logs into Docker Hub.
-    * It runs the `docker build` command to create new images for the backend and frontend.
-    * It runs the `docker push` command to upload the new images to Docker Hub, tagging them as `:latest`.
-
-#### Secrets and Variables
-To log in to Docker Hub securely, the pipeline uses encrypted secrets stored in the GitHub repository's settings (`Settings > Secrets and variables > Actions`).
-* **`DOCKERHUB_USERNAME`**: Stores the Docker Hub username.
-* **`DOCKERHUB_TOKEN`**: Stores a secure Docker Hub Access Token used as a password.
-
----
-## Technologies & Dependencies Used
-
-* **Backend**: Python, Flask, Flask-SQLAlchemy, Flask-CORS, Gunicorn
-* **Frontend**: HTML5, CSS3, Vanilla JavaScript, Node.js, Express.js
-* **Containerization**: Docker, Docker Compose
-* **CI/CD**: Docker Image, GitHub Actions
-
----
-## How to Run Locally
-
-The recommended way to run this application is with Docker Compose, as it handles both the frontend and backend setup automatically.
-
-1.  Clone this repository.
-2.  Ensure Docker and Docker Compose are installed and running.
-3.  From the project's root directory, run the command:
-    ```bash
-    docker-compose up --build
-    ```
-4.  Access the application in your web browser at `http://localhost:3000`.
-
----
-## Final Project Structure
+### Project Structure
 ```
 .
 ├── .github/
@@ -108,12 +36,155 @@ The recommended way to run this application is with Docker Compose, as it handle
 │   ├── app.py
 │   ├── requirements.txt
 │   └── Dockerfile
-└── frontend/
-    ├── index.html
-    ├── server.js
-    ├── package.json
-    └── Dockerfile
+├── frontend/
+│   ├── index.html
+│   ├── server.js
+│   ├── package.json
+│   └── Dockerfile
 ├── docker-compose.yml
 ├── docker-compose.prod.yml
 └── README.md
 ```
+
+# Step-by-Step Implementation
+
+```
+1. Clone the Repository
+Bash
+
+git clone https://github.com/<your-username>/nodejs-demo-app.git
+cd nodejs-demo-app
+2. Create Dockerfile
+Dockerfile
+
+# Use Node.js base image
+FROM node:16
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the application source
+COPY . .
+
+# Expose application port
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "app.js"]
+3. Push Docker Image to DockerHub
+Login to DockerHub:
+```
+
+```
+
+docker login
+Build and push:
+
+```
+
+docker build -t <your-dockerhub-username>/nodejs-demo-app:latest .
+docker push <your-dockerhub-username>/nodejs-demo-app:latest
+4. Configure GitHub Secrets
+Add the following secrets in your GitHub repository -> Settings -> Secrets:
+
+DOCKERHUB_USERNAME – Your DockerHub username
+
+DOCKERHUB_TOKEN – Your DockerHub access token
+
+5. Create GitHub Actions Workflow
+Create the file: .github/workflows/main.yml
+```
+
+# YAML
+
+name: CI/CD Pipeline - Node.js App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test || echo "No tests defined"
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-demo-app:latest .
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push image to DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-demo-app:latest
+```
+6. Trigger the Pipeline
+Commit and push changes to the main branch:
+
+```
+
+git add .
+git commit -m "Added CI/CD workflow"
+git push origin main
+GitHub Actions will automatically run build -> test -> push pipeline.
+Verify your DockerHub repository for the updated image.
+```
+### Learning Outcomes
+By completing this task, you will:
+
+Understand the CI/CD automation process.
+
+Learn Docker build and push workflow.
+
+Gain experience in GitHub Actions workflow creation.
+
+Enhance your DevOps project portfolio.
+
+### Interview Questions to Practice
+What is CI/CD?
+
+How do GitHub Actions work?
+
+What are runners in GitHub Actions?
+
+Difference between jobs and steps.
+
+How do you secure secrets in GitHub Actions?
+
+How to handle deployment errors in pipelines?
+
+Explain the Docker build-push workflow.
+
+How can you test a CI/CD pipeline locally?
+
+### Company Credit
+This task is created under the DevOps Internship Program by Elevate Labs. The company’s vision is to empower students and professionals with real-world DevOps expertise through hands-on training and mentorship.
+
+# Creator
+Name: Mohd Azam Uddin
+
+Role: DevOps Intern
+
+* Contribution: Implemented full CI/CD pipeline automation, containerization, and deployment workflow.
+
